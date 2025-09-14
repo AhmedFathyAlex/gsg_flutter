@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gsg_flutter/data/freelancer_model.dart';
 import 'package:gsg_flutter/routes.dart';
-import 'package:gsg_flutter/screens/login.dart';
 import 'package:gsg_flutter/widgets/freelancer_info_widget.dart';
 import 'package:gsg_flutter/widgets/section_widget.dart';
 import 'package:gsg_flutter/widgets/service_info.dart';

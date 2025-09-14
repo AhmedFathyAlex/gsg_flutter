@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:gsg_flutter/routes.dart';
+import 'package:gsg_flutter/screens/home.dart';
 
 import 'package:gsg_flutter/widgets/custom_text_field.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   Login({super.key});
+
+  static const String userCredentialsKey = 'userCredentials';
 
   @override
   State<Login> createState() => _LoginState();
@@ -14,6 +18,8 @@ class _LoginState extends State<Login> {
   final TextEditingController emailCont = TextEditingController();
 
   final TextEditingController passwordController = TextEditingController();
+
+  
 
   final _formKey = GlobalKey<FormState>();
 
@@ -75,14 +81,11 @@ class _LoginState extends State<Login> {
       isLoading = false;
     });
     if (_formKey.currentState!.validate()) {
-      // search how to pass params in named args
-      // search about recommended way of navigation in flutter ? and why
-      // what is the difference between Navigator 1.0 and Navigator 2.0
-      Navigator.pushReplacementNamed(context, Routes.home);
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(builder: (context) => Home(name: emailCont.text)),
-      // );
+      await loginUser(emailCont.text);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Home(name: emailCont.text)),
+      );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -93,4 +96,10 @@ class _LoginState extends State<Login> {
       );
     }
   }
+
+  loginUser(String email)async{
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString(Login.userCredentialsKey, email);
+  }
+
 }
