@@ -4,14 +4,14 @@ import 'package:gsg_flutter/screens/freelancer_details.dart';
 import 'package:gsg_flutter/screens/home.dart';
 import 'package:gsg_flutter/screens/login.dart';
 import 'package:gsg_flutter/screens/main_nav_screen.dart';
+import 'package:gsg_flutter/todo/data/notes_shared_db.dart';
 import 'package:gsg_flutter/todo/presentaion/screens/notes.dart';
 import 'package:gsg_flutter/screens/signup.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main()async{
   WidgetsFlutterBinding.ensureInitialized();
-  final prefs = await SharedPreferences.getInstance();
-   String? email = prefs.getString(Login.userCredentialsKey);
+ await NotesSharedDb.init();
   
   runApp(
     MaterialApp(

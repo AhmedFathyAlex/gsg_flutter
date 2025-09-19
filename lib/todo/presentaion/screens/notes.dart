@@ -1,10 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:gsg_flutter/todo/data/note_model.dart';
+import 'package:gsg_flutter/todo/data/notes_shared_db.dart';
 import 'package:gsg_flutter/todo/presentaion/widgets/note_item.dart';
 import 'package:gsg_flutter/widgets/custom_text_field.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class NotesScreen extends StatefulWidget {
   const NotesScreen({super.key});
@@ -15,7 +13,7 @@ class NotesScreen extends StatefulWidget {
 
 class _NotesScreenState extends State<NotesScreen> {
   List<NoteModel> notes = [];
-  final String notesKey = 'notes';
+
   TextEditingController titleController = TextEditingController();
   TextEditingController contentController = TextEditingController();
 
@@ -54,7 +52,7 @@ class _NotesScreenState extends State<NotesScreen> {
                           notes.add(note);
                           titleController.clear();
                           contentController.clear();
-                          updateList();
+                           NotesSharedDb.updateListAtSharedDb(notes);
                           Navigator.pop(context);
                         });
                       },
@@ -78,7 +76,7 @@ class _NotesScreenState extends State<NotesScreen> {
                     note: notes[index],
                     onDismissed: (direction) {
                       notes.removeAt(index);
-                      updateList();
+                      NotesSharedDb.updateListAtSharedDb(notes);
                       if (notes.length == 0) {
                         setState(() {});
                       }
@@ -89,26 +87,12 @@ class _NotesScreenState extends State<NotesScreen> {
     );
   }
 
-  updateList() async {
-    final prefs = await SharedPreferences.getInstance();
-    List<String> notesAsStrings = [];
-    for (var note in this.notes) {
-      notesAsStrings.add(note.toJson());
-    }
-    prefs.setStringList(notesKey, notesAsStrings);
+  fetchList()async{
+    var fetchedList = await NotesSharedDb.fetchListFromSharedDb();
+    setState((){
+     notes = fetchedList;
+    });
+    
   }
-
-  fetchList() async {
-    final prefs = await SharedPreferences.getInstance();
-
-    var notesAsStrings = prefs.getStringList(notesKey) ?? [];
-
-    for (var n in notesAsStrings) {
-      var noteDecoded = jsonDecode(n);
-      NoteModel note = NoteModel.fromJson(noteDecoded);
-      setState(() {
-        notes.add(note);
-      });
-    }
-  }
+  
 }
