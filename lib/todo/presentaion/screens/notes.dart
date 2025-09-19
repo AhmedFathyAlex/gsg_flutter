@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:gsg_flutter/data/note_model.dart';
+import 'package:gsg_flutter/todo/data/note_model.dart';
+import 'package:gsg_flutter/todo/presentaion/widgets/note_item.dart';
 import 'package:gsg_flutter/widgets/custom_text_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -71,9 +74,8 @@ class _NotesScreenState extends State<NotesScreen> {
               : ListView.builder(
                 itemCount: notes.length,
                 itemBuilder: (context, index) {
-                  return Dismissible(
-                    background: Container(color: Colors.red),
-                    key: UniqueKey(),
+                  return NoteItem(
+                    note: notes[index],
                     onDismissed: (direction) {
                       notes.removeAt(index);
                       updateList();
@@ -81,17 +83,6 @@ class _NotesScreenState extends State<NotesScreen> {
                         setState(() {});
                       }
                     },
-                    child: ListTile(
-                      title: Text(notes[index].title),
-                      subtitle: Text(notes[index].content),
-                      trailing: InkWell(
-                        onTap: () {
-                          print('aaaa');
-                          print(notes[index].toJson());
-                        },
-                        child: Text(notes[index].date),
-                      ),
-                    ),
                   );
                 },
               ),
@@ -99,14 +90,25 @@ class _NotesScreenState extends State<NotesScreen> {
   }
 
   updateList() async {
-    // final prefs = await SharedPreferences.getInstance();
-    // prefs.setStringList(notesKey, notes);
+    final prefs = await SharedPreferences.getInstance();
+    List<String> notesAsStrings = [];
+    for (var note in this.notes) {
+      notesAsStrings.add(note.toJson());
+    }
+    prefs.setStringList(notesKey, notesAsStrings);
   }
 
   fetchList() async {
-    //   final prefs = await SharedPreferences.getInstance();
-    //   setState(() {
-    //     notes = prefs.getStringList(notesKey) ?? [];
-    //   });
+    final prefs = await SharedPreferences.getInstance();
+
+    var notesAsStrings = prefs.getStringList(notesKey) ?? [];
+
+    for (var n in notesAsStrings) {
+      var noteDecoded = jsonDecode(n);
+      NoteModel note = NoteModel.fromJson(noteDecoded);
+      setState(() {
+        notes.add(note);
+      });
+    }
   }
 }
