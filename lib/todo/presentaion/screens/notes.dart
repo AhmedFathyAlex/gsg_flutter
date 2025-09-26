@@ -42,6 +42,9 @@ class _NotesScreenState extends State<NotesScreen> {
                     CustomTextField(cont: contentController, hint: 'content'),
                     ElevatedButton(
                       onPressed: ()async{
+
+                        // noteModel without id 
+
                          NoteModel note = NoteModel(
                           title: titleController.text,
                           content: contentController.text,
@@ -50,15 +53,19 @@ class _NotesScreenState extends State<NotesScreen> {
 
                         var id = await NotesSqliteDb.insertNoteToDb(note);
                           fetchList();
+                          // add id to note
+
                         // note = NoteModel(
                         //   title: note.title,
                         //   content: note.content,
                         //   date: note.date,
                         //   id: id,
                         // );
+
                         // setState((){
                         //   notes.add(note);
                         // });
+                        
                          titleController.clear();
                         contentController.clear();
                          Navigator.pop(context);
