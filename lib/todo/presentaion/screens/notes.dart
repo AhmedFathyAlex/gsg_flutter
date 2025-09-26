@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gsg_flutter/todo/data/note_model.dart';
-import 'package:gsg_flutter/todo/data/notes_shared_db.dart';
 import 'package:gsg_flutter/todo/data/notes_sqlite_db.dart';
 import 'package:gsg_flutter/todo/presentaion/widgets/note_item.dart';
 import 'package:gsg_flutter/widgets/custom_text_field.dart';
@@ -65,7 +64,7 @@ class _NotesScreenState extends State<NotesScreen> {
                         // setState((){
                         //   notes.add(note);
                         // });
-                        
+
                          titleController.clear();
                         contentController.clear();
                          Navigator.pop(context);

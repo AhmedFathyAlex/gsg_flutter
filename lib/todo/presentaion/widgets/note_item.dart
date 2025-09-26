@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gsg_flutter/todo/data/note_model.dart';
+import 'package:gsg_flutter/todo/data/notes_sqlite_db.dart';
 import 'package:gsg_flutter/widgets/custom_text_field.dart';
 
 class NoteItem extends StatelessWidget {
@@ -37,6 +38,15 @@ class NoteItem extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () async {
                        // update note in db
+                        NoteModel updatedNote = NoteModel(
+                          id: note.id,
+                          title: titleController.text,
+                          content: contentController.text,
+                          date: note.date,
+                        );
+
+                        await NotesSqliteDb.updateNoteFromDb(updatedNote);
+                        
                         Navigator.pop(context);
                       },
                       child: Text('update'),

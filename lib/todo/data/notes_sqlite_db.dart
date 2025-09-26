@@ -59,6 +59,12 @@ class NotesSqliteDb {
 
   // update 
 
+  static updateNoteFromDb(NoteModel note) async {
+    int result = await _database.rawUpdate(
+      'UPDATE $tableName SET $columnTitle = "${note.title}", $columnContent = "${note.content}" WHERE $columnId = ${note.id}',
+    );
+  }
+
   // delete
 
   static deleteNoteFromDb(NoteModel note)async{
