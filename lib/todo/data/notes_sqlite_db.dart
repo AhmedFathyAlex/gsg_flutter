@@ -35,14 +35,34 @@ class NotesSqliteDb {
 
   // insert 
 
-   static insertNoteToDb(NoteModel noteModel)async{
+   static Future<int> insertNoteToDb(NoteModel noteModel)async{
       int id = await _database.rawInsert('INSERT INTO $tableName($columnTitle, $columnContent, $columnDate) VALUES("${noteModel.title}", "${noteModel.content}","${noteModel.date}")');
-      print('note inserted with id $id');
+      return id;
     }
 
   // read 
 
+  static Future<List<NoteModel>> getNotesFromDb ()async{
+    var result =await _database.rawQuery('SELECT * FROM $tableName');
+    print(result);
+
+    List<NoteModel> notes = [];
+
+    for(var map in result){
+      NoteModel note = NoteModel.fromJson(map);
+      notes.add(note);
+    }
+
+    return notes;
+
+  }
+
   // update 
 
   // delete
+
+  static deleteNoteFromDb(NoteModel note)async{
+    int result = await _database.rawDelete('DELETE FROM $tableName WHERE $columnId = ${note.id}');
+    print('note deleted $result');
+  }
 }

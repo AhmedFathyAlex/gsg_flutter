@@ -41,23 +41,27 @@ class _NotesScreenState extends State<NotesScreen> {
                     CustomTextField(cont: titleController, hint: 'title'),
                     CustomTextField(cont: contentController, hint: 'content'),
                     ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          NoteModel note = NoteModel(
-                            title: titleController.text,
-                            content: contentController.text,
-                            date:
-                                '${DateTime.now().day}/${DateTime.now().month}',
-                          );
+                      onPressed: ()async{
+                         NoteModel note = NoteModel(
+                          title: titleController.text,
+                          content: contentController.text,
+                          date: '${DateTime.now().day}/${DateTime.now().month}',
+                        );
 
-                          notes.add(note);
-                          NotesSqliteDb.insertNoteToDb(note);
-                          titleController.clear();
-                          contentController.clear();
-                          //  NotesSharedDb.updateListAtSharedDb(notes);
-
-                          Navigator.pop(context);
-                        });
+                        var id = await NotesSqliteDb.insertNoteToDb(note);
+                          fetchList();
+                        // note = NoteModel(
+                        //   title: note.title,
+                        //   content: note.content,
+                        //   date: note.date,
+                        //   id: id,
+                        // );
+                        // setState((){
+                        //   notes.add(note);
+                        // });
+                         titleController.clear();
+                        contentController.clear();
+                         Navigator.pop(context);
                       },
                       child: Text('Add'),
                     ),
@@ -78,7 +82,9 @@ class _NotesScreenState extends State<NotesScreen> {
                   return NoteItem(
                     note: notes[index],
                     onDismissed: (direction) {
+                      NotesSqliteDb.deleteNoteFromDb(notes[index]);
                       notes.removeAt(index);
+                      
                       // NotesSharedDb.updateListAtSharedDb(notes);
                       if (notes.length == 0) {
                         setState(() {});
@@ -91,9 +97,9 @@ class _NotesScreenState extends State<NotesScreen> {
   }
 
   fetchList()async{
-    // var fetchedList = await NotesSharedDb.fetchListFromSharedDb();
+   var fetchedList = await NotesSqliteDb.getNotesFromDb();
     setState((){
-    //  notes = fetchedList;
+     notes = fetchedList;
     });
     
   }
