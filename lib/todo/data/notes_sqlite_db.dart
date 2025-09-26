@@ -1,9 +1,11 @@
+import 'package:gsg_flutter/todo/data/note_model.dart';
 import 'package:sqflite/sqflite.dart';
 
 class NotesSqliteDb {
   // Notes table ( id - title - content - date)
 
   static late Database _database;
+
   static String dbPath = 'notes.db';
   static String tableName = 'notes';
   static String columnId = 'id';
@@ -28,4 +30,19 @@ class NotesSqliteDb {
       },
     );
   }
+
+  // operations (CRUD)
+
+  // insert 
+
+   static insertNoteToDb(NoteModel noteModel)async{
+      int id = await _database.rawInsert('INSERT INTO $tableName($columnTitle, $columnContent, $columnDate) VALUES("${noteModel.title}", "${noteModel.content}","${noteModel.date}")');
+      print('note inserted with id $id');
+    }
+
+  // read 
+
+  // update 
+
+  // delete
 }

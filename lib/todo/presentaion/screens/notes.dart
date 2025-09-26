@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gsg_flutter/todo/data/note_model.dart';
 import 'package:gsg_flutter/todo/data/notes_shared_db.dart';
+import 'package:gsg_flutter/todo/data/notes_sqlite_db.dart';
 import 'package:gsg_flutter/todo/presentaion/widgets/note_item.dart';
 import 'package:gsg_flutter/widgets/custom_text_field.dart';
 
@@ -50,9 +51,11 @@ class _NotesScreenState extends State<NotesScreen> {
                           );
 
                           notes.add(note);
+                          NotesSqliteDb.insertNoteToDb(note);
                           titleController.clear();
                           contentController.clear();
-                           NotesSharedDb.updateListAtSharedDb(notes);
+                          //  NotesSharedDb.updateListAtSharedDb(notes);
+
                           Navigator.pop(context);
                         });
                       },
@@ -76,7 +79,7 @@ class _NotesScreenState extends State<NotesScreen> {
                     note: notes[index],
                     onDismissed: (direction) {
                       notes.removeAt(index);
-                      NotesSharedDb.updateListAtSharedDb(notes);
+                      // NotesSharedDb.updateListAtSharedDb(notes);
                       if (notes.length == 0) {
                         setState(() {});
                       }
@@ -88,9 +91,9 @@ class _NotesScreenState extends State<NotesScreen> {
   }
 
   fetchList()async{
-    var fetchedList = await NotesSharedDb.fetchListFromSharedDb();
+    // var fetchedList = await NotesSharedDb.fetchListFromSharedDb();
     setState((){
-     notes = fetchedList;
+    //  notes = fetchedList;
     });
     
   }
