@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:gsg_flutter/routes.dart';
+import 'package:gsg_flutter/screens/counter.dart';
 import 'package:gsg_flutter/screens/freelancer_details.dart';
 import 'package:gsg_flutter/screens/home.dart';
 import 'package:gsg_flutter/screens/login.dart';
 import 'package:gsg_flutter/screens/main_nav_screen.dart';
 import 'package:gsg_flutter/todo/data/notes_shared_db.dart';
 import 'package:gsg_flutter/todo/data/notes_sqlite_db.dart';
+import 'package:gsg_flutter/todo/presentaion/provider/notes_provider.dart';
 import 'package:gsg_flutter/todo/presentaion/screens/notes.dart';
 import 'package:gsg_flutter/screens/signup.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main()async{
@@ -16,16 +19,19 @@ void main()async{
  await NotesSqliteDb.init();
   
   runApp(
-    MaterialApp(
-      debugShowCheckedModeBanner: false,
-      routes: {
-        Routes.login: (context) => Login(),
-        Routes.home: (context) => Home(),
-        Routes.signup: (context) => Signup(),
-        Routes.allProducts: (context) => MainNavScreen(),
-        Routes.freelancerDetails: (context) => FreelancerDetails(),
-      },
-      home:NotesScreen() ,
+    ChangeNotifierProvider(
+      create: (context) => NotesProvider()..readAllNotes(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        routes: {
+          Routes.login: (context) => Login(),
+          Routes.home: (context) => Home(),
+          Routes.signup: (context) => Signup(),
+          Routes.allProducts: (context) => MainNavScreen(),
+          Routes.freelancerDetails: (context) => FreelancerDetails(),
+        },
+        home:NotesScreen(),
+      ),
     ),
   );
 }

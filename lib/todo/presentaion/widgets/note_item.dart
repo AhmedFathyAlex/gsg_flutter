@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gsg_flutter/todo/data/note_model.dart';
 import 'package:gsg_flutter/todo/data/notes_sqlite_db.dart';
+import 'package:gsg_flutter/todo/presentaion/provider/notes_provider.dart';
 import 'package:gsg_flutter/widgets/custom_text_field.dart';
+import 'package:provider/provider.dart';
 
 class NoteItem extends StatelessWidget {
   NoteItem({super.key, this.onDismissed, required this.note}) {
@@ -45,7 +47,7 @@ class NoteItem extends StatelessWidget {
                           date: note.date,
                         );
 
-                        await NotesSqliteDb.updateNoteFromDb(updatedNote);
+                        Provider.of<NotesProvider>(context,listen: false).updateNote(updatedNote);
                         
                         Navigator.pop(context);
                       },

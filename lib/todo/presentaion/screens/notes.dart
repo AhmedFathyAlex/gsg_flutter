@@ -1,30 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:gsg_flutter/todo/data/note_model.dart';
-import 'package:gsg_flutter/todo/data/notes_sqlite_db.dart';
+import 'package:gsg_flutter/todo/presentaion/provider/notes_provider.dart';
 import 'package:gsg_flutter/todo/presentaion/widgets/note_item.dart';
 import 'package:gsg_flutter/widgets/custom_text_field.dart';
+import 'package:provider/provider.dart';
 
-class NotesScreen extends StatefulWidget {
-  const NotesScreen({super.key});
-
-  @override
-  State<NotesScreen> createState() => _NotesScreenState();
-}
-
-class _NotesScreenState extends State<NotesScreen> {
-  List<NoteModel> notes = [];
+class NotesScreen extends StatelessWidget {
+   NotesScreen({super.key});
 
   TextEditingController titleController = TextEditingController();
+
   TextEditingController contentController = TextEditingController();
 
   @override
-  void initState() {
-    super.initState();
-    fetchList();
-  }
-
-  @override
   Widget build(BuildContext context) {
+
+    var notesProvider = Provider.of<NotesProvider>(context);
+
     return Scaffold(
       appBar: AppBar(title: Text('Notes')),
       floatingActionButton: FloatingActionButton(
@@ -41,29 +33,13 @@ class _NotesScreenState extends State<NotesScreen> {
                     CustomTextField(cont: contentController, hint: 'content'),
                     ElevatedButton(
                       onPressed: ()async{
-
-                        // noteModel without id 
-
                          NoteModel note = NoteModel(
                           title: titleController.text,
                           content: contentController.text,
                           date: '${DateTime.now().day}/${DateTime.now().month}',
                         );
 
-                        var id = await NotesSqliteDb.insertNoteToDb(note);
-                          fetchList();
-                          // add id to note
-
-                        // note = NoteModel(
-                        //   title: note.title,
-                        //   content: note.content,
-                        //   date: note.date,
-                        //   id: id,
-                        // );
-
-                        // setState((){
-                        //   notes.add(note);
-                        // });
+                        notesProvider.addNote(note);
 
                          titleController.clear();
                         contentController.clear();
@@ -79,35 +55,24 @@ class _NotesScreenState extends State<NotesScreen> {
         },
         child: Icon(Icons.add),
       ),
-      body:
-          notes.isEmpty
-              ? Center(child: Text('There is nothing to show'))
-              : ListView.builder(
-                itemCount: notes.length,
+      body: Consumer<NotesProvider>(builder: (context, provider, child) {
+        return provider.notes.isEmpty ? 
+        Center(child: Text('There is nothing to show')) : 
+        ListView.builder(
+                itemCount: provider.notes.length,
                 itemBuilder: (context, index) {
                   return NoteItem(
-                    note: notes[index],
+                    note: provider.notes[index],
                     onDismissed: (direction) {
-                      NotesSqliteDb.deleteNoteFromDb(notes[index]);
-                      notes.removeAt(index);
-                      
-                      // NotesSharedDb.updateListAtSharedDb(notes);
-                      if (notes.length == 0) {
-                        setState(() {});
-                      }
+                      provider.deleteNote(provider.notes[index]);
                     },
                   );
                 },
-              ),
+              );
+      }
+        
+    )
     );
   }
 
-  fetchList()async{
-   var fetchedList = await NotesSqliteDb.getNotesFromDb();
-    setState((){
-     notes = fetchedList;
-    });
-    
-  }
-  
 }
