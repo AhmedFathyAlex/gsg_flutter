@@ -1,26 +1,10 @@
-import 'dart:convert';
-import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:gsg_flutter/e-commerce/data/product_model.dart';
 import 'package:gsg_flutter/e-commerce/presentation/provider/cart_provider.dart';
 import 'package:gsg_flutter/e-commerce/presentation/widgets/product_widget.dart';
-import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
-class AllProducts extends StatefulWidget {
+class AllProducts extends StatelessWidget {
   AllProducts({super.key});
-
-  @override
-  State<AllProducts> createState() => _MainAppState();
-}
-
-class _MainAppState extends State<AllProducts> {
-  List<ProductModel> products = [];
-
-  @override
-  void initState() {
-    fetchData();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,26 +23,11 @@ class _MainAppState extends State<AllProducts> {
       body: Center(
         child: ListView.builder(
           itemBuilder: (context, index) {
-            return ProductWidget(model: products[index]);
+            return ProductWidget(model: cartProvider.products[index]);
           },
-          itemCount: products.length,
+          itemCount: cartProvider.products.length,
         ),
       ),
     );
-  }
-
-  fetchData() async {
-    var response = await http.get(
-      Uri.parse('https://fakestoreapi.com/products'),
-    );
-    log(response.body); // json(string)
-    var data = jsonDecode(response.body); // decoding
-    // [{}] -> [ model ]
-    for (Map map in data) {
-      ProductModel model = ProductModel.fromJson(map);
-      setState(() {
-        products.add(model);
-      });
-    }
   }
 }

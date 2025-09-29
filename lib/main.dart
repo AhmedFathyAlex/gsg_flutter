@@ -21,7 +21,7 @@ void main()async{
   
   runApp(
     ChangeNotifierProvider(
-      create: (context) => CartProvider(),
+      create: (context) => CartProvider()..fetchData(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         routes: {
