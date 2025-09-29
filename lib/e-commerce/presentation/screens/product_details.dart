@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gsg_flutter/data/product_model.dart';
+import 'package:gsg_flutter/e-commerce/data/product_model.dart';
 import 'package:gsg_flutter/widgets/rating.dart';
 
 class ProductDetails extends StatelessWidget {

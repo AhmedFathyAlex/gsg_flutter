@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:gsg_flutter/data/product_model.dart';
+import 'package:gsg_flutter/e-commerce/data/product_model.dart';
 
 class CartProvider extends ChangeNotifier{
   List<ProductModel> cart = [];
@@ -16,5 +16,14 @@ class CartProvider extends ChangeNotifier{
   void clearCart(){
     cart.clear();
     notifyListeners();
+  }
+
+  bool isInCart(ProductModel product){
+    for (var element in cart)  {
+      if(element.id == product.id){
+        return true;
+      }
+    }
+    return false;
   }
 }
