@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gsg_flutter/screens/all_products.dart';
-import 'package:gsg_flutter/screens/books.dart';
+import 'package:gsg_flutter/data/product_model.dart';
+import 'package:gsg_flutter/e-commerce/presentation/screens/all_products.dart';
+import 'package:gsg_flutter/e-commerce/presentation/screens/cart.dart';
 
 class MainNavScreen extends StatefulWidget {
   MainNavScreen({super.key});
@@ -10,7 +11,8 @@ class MainNavScreen extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainNavScreen> {
-  List<Widget> screens = [AllProducts(), Books(), Text('Settings')];
+  List<Widget> screens = [AllProducts(), Cart(), Text('Settings')];
+  
   int index = 0;
   @override
   Widget build(BuildContext context) {
@@ -31,9 +33,9 @@ class _MainAppState extends State<MainNavScreen> {
             activeIcon: Icon(Icons.home_filled),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_bag_outlined),
-            activeIcon: Icon(Icons.menu_book),
-            label: 'Books',
+            icon: Icon(Icons.shopping_cart_outlined),
+            activeIcon: Icon(Icons.shopping_cart),
+            label: 'Cart',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings_outlined),

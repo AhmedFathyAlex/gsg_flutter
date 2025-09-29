@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:gsg_flutter/e-commerce/presentation/provider/cart_provider.dart';
 import 'package:gsg_flutter/routes.dart';
 import 'package:gsg_flutter/screens/counter.dart';
 import 'package:gsg_flutter/screens/freelancer_details.dart';
 import 'package:gsg_flutter/screens/home.dart';
 import 'package:gsg_flutter/screens/login.dart';
-import 'package:gsg_flutter/screens/main_nav_screen.dart';
+import 'package:gsg_flutter/e-commerce/presentation/screens/main_nav_screen.dart';
 import 'package:gsg_flutter/todo/data/notes_shared_db.dart';
 import 'package:gsg_flutter/todo/data/notes_sqlite_db.dart';
 import 'package:gsg_flutter/todo/presentaion/provider/notes_provider.dart';
@@ -20,7 +21,7 @@ void main()async{
   
   runApp(
     ChangeNotifierProvider(
-      create: (context) => NotesProvider()..readAllNotes(),
+      create: (context) => CartProvider(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         routes: {
@@ -30,7 +31,7 @@ void main()async{
           Routes.allProducts: (context) => MainNavScreen(),
           Routes.freelancerDetails: (context) => FreelancerDetails(),
         },
-        home:NotesScreen(),
+        home: MainNavScreen(),
       ),
     ),
   );

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gsg_flutter/todo/data/note_model.dart';
-import 'package:gsg_flutter/todo/data/notes_sqlite_db.dart';
 import 'package:gsg_flutter/todo/presentaion/provider/notes_provider.dart';
 import 'package:gsg_flutter/widgets/custom_text_field.dart';
 import 'package:provider/provider.dart';

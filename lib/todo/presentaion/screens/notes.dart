@@ -15,7 +15,7 @@ class NotesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    var notesProvider = Provider.of<NotesProvider>(context);
+    var notesProvider = Provider.of<NotesProvider>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(title: Text('Notes')),
