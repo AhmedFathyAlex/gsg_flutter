@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gsg_flutter/bloc_observer.dart';
+import 'package:gsg_flutter/counter/counter_screen.dart';
 import 'package:gsg_flutter/e-commerce/presentation/provider/cart_provider.dart';
 import 'package:gsg_flutter/routes.dart';
 import 'package:gsg_flutter/screens/counter.dart';
@@ -18,7 +21,7 @@ void main()async{
   WidgetsFlutterBinding.ensureInitialized();
  await NotesSharedDb.init();
  await NotesSqliteDb.init();
-  
+  Bloc.observer = MyBlocObserver();
   runApp(
     ChangeNotifierProvider(
       create: (context) => CartProvider()..fetchData(),
@@ -31,7 +34,7 @@ void main()async{
           Routes.allProducts: (context) => MainNavScreen(),
           Routes.freelancerDetails: (context) => FreelancerDetails(),
         },
-        home: MainNavScreen(),
+        home: CounterScreen(),
       ),
     ),
   );
