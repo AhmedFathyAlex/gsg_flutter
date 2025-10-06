@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gsg_flutter/bloc_observer.dart';
 import 'package:gsg_flutter/counter/counter_screen.dart';
 import 'package:gsg_flutter/e-commerce/presentation/provider/cart_provider.dart';
+import 'package:gsg_flutter/freelancer/cubit/auth_cubit.dart';
 import 'package:gsg_flutter/routes.dart';
 import 'package:gsg_flutter/screens/counter.dart';
 import 'package:gsg_flutter/freelancer/freelancer_details.dart';
@@ -23,8 +24,8 @@ void main()async{
  await NotesSqliteDb.init();
   Bloc.observer = MyBlocObserver();
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => CartProvider()..fetchData(),
+    BlocProvider(
+      create: (context) => AuthCubit(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         routes: {
