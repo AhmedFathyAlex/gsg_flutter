@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gsg_flutter/routes.dart';
-import 'package:gsg_flutter/screens/home.dart';
+import 'package:gsg_flutter/freelancer/home.dart';
 
 import 'package:gsg_flutter/widgets/custom_text_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
