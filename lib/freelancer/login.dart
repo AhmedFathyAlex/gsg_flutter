@@ -26,13 +26,13 @@ class Login extends StatelessWidget {
         if (state is AuthSuccessState) {
           Navigator.pushReplacement(context, MaterialPageRoute(
             builder: (context) {
-              return Home(name: state.email);
+              return Home(name: state.user.user?.email ?? '');
             },
           ));
         } else if (state is AuthErrorState) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(state.error),
+              content: Text(state.errorMessage),
               duration: Duration(milliseconds: 300),
               backgroundColor: Colors.red,
             ),
@@ -96,7 +96,6 @@ class Login extends StatelessWidget {
     if (_formKey.currentState!.validate()) {
       String email = emailCont.text;
       String password = passwordController.text;
-
       // call cubit to login
       BlocProvider.of<AuthCubit>(context).login(email, password);
     } else {
