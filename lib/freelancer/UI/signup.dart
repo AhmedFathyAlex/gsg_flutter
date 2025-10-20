@@ -6,8 +6,8 @@ import 'package:gsg_flutter/freelancer/cubit/auth_cubit.dart';
 import 'package:gsg_flutter/freelancer/cubit/auth_states.dart';
 import 'package:gsg_flutter/freelancer/data/firebase_auth_service.dart';
 import 'package:gsg_flutter/routes.dart';
-import 'package:gsg_flutter/freelancer/home.dart';
-import 'package:gsg_flutter/freelancer/login.dart';
+import 'package:gsg_flutter/freelancer/UI/home.dart';
+import 'package:gsg_flutter/freelancer/UI/login.dart';
 import 'package:gsg_flutter/widgets/custom_text_field.dart';
 
 class Signup extends StatelessWidget {
@@ -28,7 +28,7 @@ class Signup extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) {
-                return Home(name: state.user.user?.email ?? '');
+                return Home(name: state.user.email ?? '');
               },
             ),
           );

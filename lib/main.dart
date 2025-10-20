@@ -5,13 +5,13 @@ import 'package:gsg_flutter/bloc_observer.dart';
 import 'package:gsg_flutter/firebase_options.dart';
 import 'package:gsg_flutter/freelancer/cubit/auth_cubit.dart';
 import 'package:gsg_flutter/routes.dart';
-import 'package:gsg_flutter/freelancer/freelancer_details.dart';
-import 'package:gsg_flutter/freelancer/home.dart';
-import 'package:gsg_flutter/freelancer/login.dart';
+import 'package:gsg_flutter/freelancer/UI/freelancer_details.dart';
+import 'package:gsg_flutter/freelancer/UI/home.dart';
+import 'package:gsg_flutter/freelancer/UI/login.dart';
 import 'package:gsg_flutter/e-commerce/presentation/screens/main_nav_screen.dart';
 import 'package:gsg_flutter/todo/data/notes_shared_db.dart';
 import 'package:gsg_flutter/todo/data/notes_sqlite_db.dart';
-import 'package:gsg_flutter/freelancer/signup.dart';
+import 'package:gsg_flutter/freelancer/UI/signup.dart';
 
 
 void main()async{

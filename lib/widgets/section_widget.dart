@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gsg_flutter/freelancer/home.dart';
+import 'package:gsg_flutter/freelancer/UI/home.dart';
 
 class SectionWidget extends StatelessWidget {
   final String sectionTitle;

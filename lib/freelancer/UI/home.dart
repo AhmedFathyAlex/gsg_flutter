@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gsg_flutter/data/freelancer_model.dart';
+import 'package:gsg_flutter/freelancer/UI/settings.dart';
 import 'package:gsg_flutter/freelancer/data/firebase_auth_service.dart';
 import 'package:gsg_flutter/routes.dart';
 import 'package:gsg_flutter/widgets/freelancer_info_widget.dart';
@@ -102,10 +103,16 @@ class Home extends StatelessWidget {
       appBar: AppBar(
         title: Image.asset('assets/logo.png'),
         actions: [
-          Image.asset('assets/bell.png'),
-          SizedBox(width: 20),
-          Image.asset('assets/cart.png'),
-          SizedBox(width: 20),
+          IconButton(
+            onPressed: () {
+              Navigator.push(context,MaterialPageRoute(
+                builder: (context) {
+                  return Settings();
+                },
+              ));
+            },
+            icon: Icon(Icons.settings),
+          ),
           IconButton(
             onPressed: () {
               FirebaseAuthService.logout();

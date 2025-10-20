@@ -3,22 +3,30 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gsg_flutter/freelancer/cubit/auth_cubit.dart';
 import 'package:gsg_flutter/freelancer/cubit/auth_states.dart';
 import 'package:gsg_flutter/routes.dart';
-import 'package:gsg_flutter/freelancer/home.dart';
+import 'package:gsg_flutter/freelancer/UI/home.dart';
 
 import 'package:gsg_flutter/widgets/custom_text_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
   Login({super.key});
 
-  
+  @override
+  State<Login> createState() => _LoginState();
+}
 
+class _LoginState extends State<Login> {
   final TextEditingController emailCont = TextEditingController();
 
   final TextEditingController passwordController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
+@override
+  void initState() {
+    super.initState();
+    check();
+  }
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AuthStates>(
@@ -26,7 +34,7 @@ class Login extends StatelessWidget {
         if (state is AuthSuccessState) {
           Navigator.pushReplacement(context, MaterialPageRoute(
             builder: (context) {
-              return Home(name: state.user.user?.email ?? '');
+              return Home(name: state.user.email ?? '');
             },
           ));
         } else if (state is AuthErrorState) {
@@ -108,5 +116,8 @@ class Login extends StatelessWidget {
       );
     }
   }
-
+  void check()async{ 
+    await Duration(seconds: 1);
+    context.read<AuthCubit>().checkIfLoggedIn();
+  }
 }
