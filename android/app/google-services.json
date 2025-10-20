@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "187369178227",
+    "project_id": "gsg-flutter",
+    "storage_bucket": "gsg-flutter.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:187369178227:android:90b5031ebeb04202191606",
+        "android_client_info": {
+          "package_name": "com.example.gsg_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3JaluHLl8JiSa9prICLku4kdCyiGRtvc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

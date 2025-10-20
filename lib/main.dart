@@ -1,25 +1,22 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gsg_flutter/bloc_observer.dart';
-import 'package:gsg_flutter/counter/counter_screen.dart';
-import 'package:gsg_flutter/e-commerce/presentation/provider/cart_provider.dart';
+import 'package:gsg_flutter/firebase_options.dart';
 import 'package:gsg_flutter/freelancer/cubit/auth_cubit.dart';
 import 'package:gsg_flutter/routes.dart';
-import 'package:gsg_flutter/screens/counter.dart';
 import 'package:gsg_flutter/freelancer/freelancer_details.dart';
 import 'package:gsg_flutter/freelancer/home.dart';
 import 'package:gsg_flutter/freelancer/login.dart';
 import 'package:gsg_flutter/e-commerce/presentation/screens/main_nav_screen.dart';
 import 'package:gsg_flutter/todo/data/notes_shared_db.dart';
 import 'package:gsg_flutter/todo/data/notes_sqlite_db.dart';
-import 'package:gsg_flutter/todo/presentaion/provider/notes_provider.dart';
-import 'package:gsg_flutter/todo/presentaion/screens/notes.dart';
 import 'package:gsg_flutter/freelancer/signup.dart';
-import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 void main()async{
-  WidgetsFlutterBinding.ensureInitialized();
+ WidgetsFlutterBinding.ensureInitialized();
+ await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
  await NotesSharedDb.init();
  await NotesSqliteDb.init();
   Bloc.observer = MyBlocObserver();
@@ -39,6 +36,7 @@ void main()async{
       ),
     ),
   );
+  
 }
 
 // Built-in widgets

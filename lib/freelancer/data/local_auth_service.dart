@@ -1,6 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-class AuthService {
+class LocalAuthService {
  static late  SharedPreferences prefs;
  static const String userCredentialsKey = 'userCredentials';
   void initAuthService()async{

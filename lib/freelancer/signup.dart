@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:gsg_flutter/freelancer/data/firebase_auth_service.dart';
 import 'package:gsg_flutter/routes.dart';
 import 'package:gsg_flutter/freelancer/home.dart';
 import 'package:gsg_flutter/freelancer/login.dart';
@@ -91,9 +94,27 @@ class Signup extends StatelessWidget {
   }
 
   // form validation
-  _signup(BuildContext context) {
+  _signup(BuildContext context)async{
     if (_formKey.currentState!.validate()) {
-      Navigator.pushReplacementNamed(context, Routes.home);
+      try{
+           var credentials = await FirebaseAuthService.signup(
+          emailCont.text,
+          passwordController.text,
+        );
+
+        log(credentials.toString());
+        Navigator.pushReplacementNamed(context, Routes.home);
+     
+      }
+      catch(e){
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.toString()),
+            duration: Duration(milliseconds: 500),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

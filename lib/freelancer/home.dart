@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gsg_flutter/data/freelancer_model.dart';
+import 'package:gsg_flutter/freelancer/data/firebase_auth_service.dart';
 import 'package:gsg_flutter/routes.dart';
 import 'package:gsg_flutter/widgets/freelancer_info_widget.dart';
 import 'package:gsg_flutter/widgets/section_widget.dart';
@@ -107,6 +108,7 @@ class Home extends StatelessWidget {
           SizedBox(width: 20),
           IconButton(
             onPressed: () {
+              FirebaseAuthService.logout();
               Navigator.pushReplacementNamed(context, Routes.login);
             },
             icon: Icon(Icons.logout),
