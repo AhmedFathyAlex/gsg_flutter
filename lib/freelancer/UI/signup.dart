@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gsg_flutter/freelancer/cubit/auth_cubit.dart';
 import 'package:gsg_flutter/freelancer/cubit/auth_states.dart';
 import 'package:gsg_flutter/freelancer/data/firebase_auth_service.dart';
+import 'package:gsg_flutter/freelancer/data/firestore_service.dart';
 import 'package:gsg_flutter/routes.dart';
 import 'package:gsg_flutter/freelancer/UI/home.dart';
 import 'package:gsg_flutter/freelancer/UI/login.dart';
@@ -24,6 +25,7 @@ class Signup extends StatelessWidget {
     return BlocListener<AuthCubit, AuthStates>(
       listener: (context, state) {
         if (state is AuthSuccessState) {
+          saveUserData(state.user.uid);
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -137,5 +139,14 @@ class Signup extends StatelessWidget {
         ),
       );
     }
+  }
+
+  void saveUserData(String userId) {
+    Map<String,dynamic> userData = {
+      'name':nameController.text,
+      'email':emailCont.text,
+      'phone':phoneController.text,
+    };
+    FirestoreService.saveUserData(userData, userId);
   }
 }
