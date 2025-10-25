@@ -24,4 +24,10 @@ static const String usersCollection = 'users';
       throw Exception("User data not found");
     }
   }
+
+  static updateUserData(ProfileUserModel newProfileModel, String userId)async{
+    // Implementation to update user data in Firestore
+    await FirebaseFirestore.instance.collection(usersCollection)
+    .doc(userId).update(newProfileModel.toMap());
+  }
 }
